@@ -1,0 +1,47 @@
+BENCHMARK ONE N321 WITH LINUX NETWORK STACK
+
+@200MHz and 200MS/s (both not stable)
+
+    sudo ./channelsounder --args "type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=200e6" --channels "0,1" --rx_rate 200e6 --rx_subdev "A:0 B:0" --tx_rate 200e6 --tx_subdev "A:0 B:0" --duration 10
+    sudo ./channelsounder --args "type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=200e6" --channels "0,1" --rx_rate 200e6 --rx_subdev "A:0 B:0" --tx_rate 200e6 --tx_subdev "A:0 B:0" --duration 10
+
+
+
+BENCHMARK TWO N321 WITH LINUX NETWORK STACK
+
+@200MHz and 200MS/s (not stable)
+
+    sudo ./channelsounder --args "type0=n3xx,mgmt_addr0=192.168.1.156,addr0=192.168.10.2,second_addr0=192.168.20.2,time_source0=internal,clock_source0=external,master_clock_rate0=200e6,type1=n3xx,mgmt_addr1=192.168.1.157,addr1=192.168.30.2,second_addr1=192.168.40.2,time_source1=external,clock_source1=external,master_clock_rate1=200e6" --channels "0,1,2,3" --rx_rate 200e6 --rx_subdev "A:0 B:0" --rx_delay 1.0 --tx_rate 200e6 --tx_subdev "A:0 B:0" --tx_delay 1.0 --duration 10
+
+
+
+BENCHMARK ONE N321 WITH DPDK (must be run as su)
+
+@200MHz and 200MS/s (both stable)
+
+    ./channelsounder --args "type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=200e6,use_dpdk=1" --channels "0,1" --rx_rate 200e6 --rx_subdev "A:0 B:0" --tx_rate 200e6 --tx_subdev "A:0 B:0" --duration 10
+    ./channelsounder --args "type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=200e6,use_dpdk=1" --channels "0,1" --rx_rate 200e6 --rx_subdev "A:0 B:0" --tx_rate 200e6 --tx_subdev "A:0 B:0" --duration 10
+
+
+
+BENCHMARK TWO N321 WITH DPDK (must be run as su)
+
+@200MHz and 200MS/s (not stable)
+
+    ./channelsounder --args "type0=n3xx,mgmt_addr0=192.168.1.156,addr0=192.168.10.2,second_addr0=192.168.20.2,time_source0=internal,clock_source0=external,master_clock_rate0=200e6,type1=n3xx,mgmt_addr1=192.168.1.157,addr1=192.168.30.2,second_addr1=192.168.40.2,time_source1=external,clock_source1=external,master_clock_rate1=200e6,use_dpdk=1" --channels "0,1,2,3" --rx_rate 200e6 --rx_subdev "A:0 B:0" --rx_delay 1.0 --tx_rate 200e6 --tx_subdev "A:0 B:0" --tx_delay 1.0 --duration 10
+
+@200MHz and 200MS/s and non-float data types (not stable)
+
+    ./channelsounder --args "type0=n3xx,mgmt_addr0=192.168.1.156,addr0=192.168.10.2,second_addr0=192.168.20.2,time_source0=internal,clock_source0=external,master_clock_rate0=200e6,type1=n3xx,mgmt_addr1=192.168.1.157,addr1=192.168.30.2,second_addr1=192.168.40.2,time_source1=external,clock_source1=external,master_clock_rate1=200e6,use_dpdk=1" --channels "0,1,2,3" --rx_rate 200e6 --rx_subdev "A:0 B:0" --rx_delay 1.0 --rx_cpu sc16 --tx_rate 200e6 --tx_subdev "A:0 B:0" --tx_delay 1.0 --tx_cpu sc16 --duration 10
+
+@250MHz and 125MS/s (stable)
+
+    ./channelsounder --args "type0=n3xx,mgmt_addr0=192.168.1.156,addr0=192.168.10.2,second_addr0=192.168.20.2,time_source0=internal,clock_source0=external,master_clock_rate0=250e6,type1=n3xx,mgmt_addr1=192.168.1.157,addr1=192.168.30.2,second_addr1=192.168.40.2,time_source1=external,clock_source1=external,master_clock_rate1=250e6,use_dpdk=1" --channels "0,1,2,3" --rx_rate 125e6 --rx_subdev "A:0 B:0" --rx_delay 1.0 --tx_rate 125e6 --tx_subdev "A:0 B:0" --tx_delay 1.0 --duration 10
+
+
+
+BENCHMARK/DEBUG TWO N321 WITH DPDK (must be run as su) ONLY ONE TX CHANNEL
+
+@250MHz and 125MS/s (stable)
+
+    ./channelsounder --args "type0=n3xx,mgmt_addr0=192.168.1.156,addr0=192.168.10.2,second_addr0=192.168.20.2,time_source0=internal,clock_source0=external,master_clock_rate0=250e6,type1=n3xx,mgmt_addr1=192.168.1.157,addr1=192.168.30.2,second_addr1=192.168.40.2,time_source1=external,clock_source1=external,master_clock_rate1=250e6,use_dpdk=1" --rx_channels "0,1,2,3" --rx_rate 125e6 --rx_subdev "A:0 B:0" --rx_delay 1.0 --tx_channels "0" --tx_rate 125e6 --tx_subdev "A:0 B:0" --tx_delay 1.0 --duration 60

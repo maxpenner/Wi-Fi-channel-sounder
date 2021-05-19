@@ -1,0 +1,24 @@
+SHOW PCIE DEVICES
+
+    lspci
+
+DEFAULT ROUTE SETTINGS
+
+    ip r
+    sudo route del default gw 172.23.42.42
+    sudo route del default gw 192.168.50.1
+    sudo route del default gw 192.168.1.1 dev enp5s0
+
+WLAN PROPERTIES
+
+    iwconfig wlp1s0
+    iw dev wlp1s0 info
+    iw dev wlp1s0 link
+
+CREATE TRAFFIC (~64 MBit/s)
+
+    sudo ping 192.168.1.50 -i 0.005 -s 65000 2>&1 >/dev/null
+
+SET TX POWER IN dBm
+
+    sudo iwconfig wlp4s0 txpower 22

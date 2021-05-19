@@ -1,0 +1,21 @@
+FIRST USRP, TWO SUBDEVICES
+
+sudo uhd_cal_rx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=250e6" --subdev "A:0"
+sudo uhd_cal_rx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=250e6" --subdev "B:0"
+
+sudo uhd_cal_tx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=250e6" --subdev "A:0"
+sudo uhd_cal_tx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=250e6" --subdev "B:0"
+
+sudo uhd_cal_tx_dc_offset --verbose --args="type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=250e6" --subdev "A:0"
+sudo uhd_cal_tx_dc_offset --verbose --args="type=n3xx,mgmt_addr=192.168.1.156,addr=192.168.10.2,second_addr=192.168.20.2,master_clock_rate=250e6" --subdev "B:0"
+
+SECOND USRP, TWO SUBDEVICES
+
+sudo uhd_cal_rx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=250e6" --subdev "A:0"
+sudo uhd_cal_rx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=250e6" --subdev "B:0"
+
+sudo uhd_cal_tx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=250e6" --subdev "A:0"
+sudo uhd_cal_tx_iq_balance --verbose --args="type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=250e6" --subdev "B:0"
+
+sudo uhd_cal_tx_dc_offset --verbose --args="type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=250e6" --subdev "A:0"
+sudo uhd_cal_tx_dc_offset --verbose --args="type=n3xx,mgmt_addr=192.168.1.157,addr=192.168.30.2,second_addr=192.168.40.2,master_clock_rate=250e6" --subdev "B:0"

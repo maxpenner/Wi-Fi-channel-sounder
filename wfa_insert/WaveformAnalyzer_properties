@@ -1,0 +1,3 @@
+properties (Access=public)
+    usrp_gain_used;
+end

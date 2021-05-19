@@ -1,0 +1,106 @@
+function [] = FORMAT_filter_CRC_filter_SIZE_reduction(obj)
+
+    % create a copy of the analyzer results
+    results = obj.Results;
+
+    % iterate over each found packet
+    for packet_id=1:1:numel(results)
+
+        % extract packet
+        wifi_packet = results{packet_id};
+
+        % content of structure wifi_packet
+
+        % PacketNum
+        % Format
+        % PacketOffset
+        % NumRxSamples
+        % PacketPower
+        % Preamble
+        % LSIG
+        % RLSIG
+        % PHYConfig             1 x n_users
+        % Status
+        % PacketContents
+        % RxPacket              n_samples x n_tx_ant
+        % MAC                   1 x n_users
+        % HESIGA
+        % HESIGB                contains substructure 1 x n_users
+        % HEPreamble            contains substructure 1 x n_RUs
+        % HEData                contains substructure User with corrspondence to RU, contains substructure RU with corrspondence to users
+
+        % If we were to save the entire stucture, the amount of data would be very large.
+        % Therefore, we will now check some conditions to see if we can delete the entire packet.
+        % If we keep the packet, we still reduce its size.
+
+        % incorrect format, we accept only Wi-Fi 6
+        format = wifi_packet.Format;
+        if strcmp(format,'HE-SU') == false && strcmp(format,'HE-EXT-SU') == false && strcmp(format,'HE-MU') == false
+            results{packet_id} = [];
+            continue;
+        end
+
+        % not successfully decoded
+        if strcmp(wifi_packet.Status, "Success") == false
+            results{packet_id} = [];
+            continue;
+        end
+
+        % unknown content
+        if strcmp(wifi_packet.PacketContents, "Unknown") == true
+            results{packet_id} = [];
+            continue;
+        end
+
+        % size reduction, remove rx samples
+        wifi_packet.RxPacket = [];
+
+        % The field MAC is an array of structures, one per user.
+        % Any user can have one or more MPDUs (A-MPDU).
+        % Each MPDU has one CRC.
+        % We need at least one correct CRC per user, otherwise we delete the packet.
+
+        % iterate over users
+        for MAC_of_user_id=1:1:numel(wifi_packet.MAC)
+
+            % size reduction, remove complete binary MPDUList
+            wifi_packet.MAC(MAC_of_user_id).MPDUList = [];
+
+            % each MPDU can be an A-MPDU
+            n_mpdu = numel(wifi_packet.MAC(MAC_of_user_id).MPDU);
+
+            % iterate over all MPDUs of this user
+            any_mpdu_crc_correct = false;
+            for MPDU_id=1:1:n_mpdu
+
+                % check if payload was successfully decoded
+                if wifi_packet.MAC(MAC_of_user_id).MPDU(MPDU_id).DecodeStatus == wlanMACDecodeStatus.Success
+                    any_mpdu_crc_correct = true;
+                end
+
+                % size reduction, remove payload
+                wifi_packet.MAC(MAC_of_user_id).MPDU(MPDU_id).Payload = [];
+            end
+
+            % not a single CRC correct?
+            if any_mpdu_crc_correct == false
+                wifi_packet = [];
+                break;
+            end
+        end
+
+        % if the packet has survived, another size reduction
+        if isempty(wifi_packet) == false
+            wifi_packet.HEData.User = [];
+        end
+
+        % overwrite
+        results{packet_id} = wifi_packet;
+    end
+
+    % remove empty packets
+    results = results(~cellfun('isempty',results));
+
+    % overwrite
+    obj.Results = results;
+end
