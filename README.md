@@ -25,7 +25,7 @@ We select an off-the-shelf Wi-Fi AP and split the received signal, which is then
 
 This is an image of the AP connected to the SDR:
 <p align="center">
-  <img src="./pics/testbed_picture.jpg" width="600">
+  <img src="./pics/testbed_picture.png" width="600">
 </p>
 
 ## Usage
