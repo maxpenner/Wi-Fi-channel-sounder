@@ -83,7 +83,3 @@ The results are averaged over about 2000 packets to see how stable the channel m
   <img src="./pics/channel_estimation_0.svg" width="400">
   <img src="./pics/channel_estimation_1.svg" width="400">
 </p>
-
-## Further information
-
-If you have any questions, feel free to contact me (maxim.penner@ikt.uni-hannover.de).
