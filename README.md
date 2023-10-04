@@ -83,3 +83,7 @@ The results are averaged over about 2000 packets to see how stable the channel m
   <img src="./pics/channel_estimation_0.svg" width="400">
   <img src="./pics/channel_estimation_1.svg" width="400">
 </p>
+
+## Acknowledgement
+
+This repository was developed within the project [AI4Mobile](https://www.forschung-it-sicherheit-kommunikationssysteme.de/projekte/ai4mobile).
